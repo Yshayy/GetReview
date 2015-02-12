@@ -28,7 +28,8 @@ body {
   width: 389px;
 }
 #App #form #submitRequest {
-  width: 250px;
+  width: 180px;
+  border-radius: 30px;
 }
 #App #form #header {
   font-size: 40px;
@@ -36,6 +37,12 @@ body {
   width: 389px;
   text-align: left;
   margin: auto;
+  position: relative;
+}
+#App #form #header img {
+  position: absolute;
+  left: -80px;
+  top: 0;
 }
 #App #form #groups {
   margin-top: 20px;
@@ -77,7 +84,16 @@ body {
 #App #form #groups .radio-group input[type=radio] {
   display: none;
 }
-#App #form textarea {
+#App #form #descriptionContainer {
+  position: relative;
+  margin-top: 20px;
+}
+#App #form #descriptionContainer img {
+  position: absolute;
+  top: 0;
+  left: -58px;
+}
+#App #form #descriptionContainer textarea {
   background: center center no-repeat;
   /* This ruins default border */
   margin-top: 30px;
@@ -93,8 +109,9 @@ body {
   margin: auto;
   margin-bottom: 20px;
   resize: none;
+  position: relative;
 }
-#App #form textarea:focus {
+#App #form #descriptionContainer textarea:focus {
   border-width: 0;
 }
 #App #form ::-webkit-input-placeholder {

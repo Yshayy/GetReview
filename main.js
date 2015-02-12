@@ -115,8 +115,8 @@ var requestReviewRoute = function()
 
       data: {
         groups: [
-            'Dev',
             'Product',
+            'Dev',
             'UX'],
         description: '',
         group: 'UX'

@@ -29,7 +29,10 @@
 
    <script id="RequestReviewTemplate" type='text/ractive'>
         <div id='form'>            
-            <div id='header'> What kind of review do you need?</div>        
+            <div id='header'>
+                <span> What kind of review do you need?</span>
+                <img src='./assets/type.png'/>
+            </div>        
             <div id='groups'>
             {{#groups}}            
             <div class='radio-group'>
@@ -38,7 +41,12 @@
             </div>
             {{/groups}}
             </div>
-            <textarea placeholder='Add a short description here...' id='desc' value='{{description}}'/>
+            <div id='descriptionContainer'>
+                <textarea placeholder='Add a short description here...' id='desc' value='{{description}}'/>
+                <img src='./assets/pencil.png'/>
+            </div>
+                
+            
             <div class='btn'  on-click='submitReview' id='submitRequest'>Submit</div>
         </div>
   </script>
