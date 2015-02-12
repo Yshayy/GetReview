@@ -96,18 +96,33 @@
         <a id="requestReview" href="#/request">
             <div id="btnRequestReview" class='btn'>Get review</div>
         </a>
-        <ul>
-        {{#reviews}}
-            <li>
-                <div>from {{reviewee.firstName}}:</div>
-                <div>{{description}}</div>
-                <div>
-                <button on-click="accept">accept</button>
-                <button on-click="decline">decline</button>
-                </div>
-            </li>
-        {{/reviews}}
-        </ul>
+     
+            
+        <table class='pending-queue'>
+            {{#reviews}}
+            <tr>
+                <td>
+                    <img src="{{reviewee.picture}}" alt="{{reviewee.firstName}}" />
+                </td>
+                <td>
+                    {{reviewee.firstName}}
+                </td>
+                <td class='group-container'>
+                    {{group}}
+                </td>
+                <td>
+                    {{timespan}}
+                </td>
+                <td class='btn-container'>
+                    <div class='btn accept-btn' on-click="accept">Accept</div>
+                </td>
+                <td class='btn-container'>
+                    <div class='btn decline-btn' on-click="decline">Decline</div>
+                </td>
+            </tr>
+            {{/reviews}}
+        </table>
+        
   </script>
 
   <script src="main.js"></script>

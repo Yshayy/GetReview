@@ -7,6 +7,7 @@ var db = new Firebase("https://getreview.firebaseio.com");
 var users = db.child("users");
 var reviews = db.child("reviews");
 var ractive;
+var groups = ['Dev', 'UX', 'Product'];
 var app = {
   router: undefined
 }
@@ -34,11 +35,8 @@ var loginRoute = function()
         return;
     }
    ractive = new Ractive({
-
       el: 'App',
-
       template: '#LoginTemplate',
-
       data: {}
     });
 
@@ -137,10 +135,7 @@ var requestReviewRoute = function()
       template: '#RequestReviewTemplate',
 
       data: {
-        groups: [
-            'Product',
-            'Dev',
-            'UX'],
+        groups: groups,
         description: '',
         group: 'UX'
       }
@@ -206,7 +201,7 @@ function thanksRoute(group, id)
          ractive.on({
         sayThanks: function(){
             console.log('said thanks');
-            app.router.setRoute("MyReviews/Dev");   
+            app.router.setRoute("MyReviews");   
         }
      });
     });
@@ -214,7 +209,7 @@ function thanksRoute(group, id)
    
 }
 
-function myReviewsRoute(group)
+function myReviewsRoute()
 {
     ractive = new Ractive({
 
@@ -227,28 +222,57 @@ function myReviewsRoute(group)
       }
     });
     
-    var myReviews = reviews.child(group);
-    myReviews.on("child_added", function(snapshot)
+    var aggregatedReviews = {};
+    for(var i = 0;i<groups.length;i++)
     {
-        var review = snapshot.val();
-        review.id = snapshot.name();
-        if (review.reviewer) return;
-        if (review.status !== "pending") return;
-        if (review.reviewee === db.getAuth().uid) return;
-        ractive.data.reviews.push(review);
-    });
+        var myReviews = reviews.child(groups[i]);
+        var reviewGroup = groups[i];
+        myReviews.on("child_added", function(snapshot, obj)
+        {
+            var review = snapshot.val();
+            review.id = snapshot.name();
+            review.group = snapshot.ref().parent().name();
+            review.timespan = $.timeago(review.date);
+            if (review.reviewer) return;            
+            if (review.status !== "pending" || 
+                review.reviewee.id == db.getAuth().uid ||
+               review.users[db.getAuth().uid].status !== 'pending') return;
+            if (review.reviewee === db.getAuth().uid) return;
+            ractive.data.reviews.push(review);
+        });    
+        
+         myReviews.on("child_removed", function(snapshot)
+        {
+            var review = snapshot.val();
+            review.id = snapshot.name();
+            for(var j = 0;j<groups.length;j++)
+            {
+                if (ractive.datata.reviews[j].id == review.id){
+                    ractive.datata.reviews.splice(j,1);
+                }
+            }
+        });    
+    }
     
+    setInterval(function(){
+        for(var i = 0;i<ractive.data.reviews.length;i++) {
+            console.log('update');
+            ractive.data.reviews[i].timespan = $.timeago(ractive.data.reviews[i].date);
+        }
+    },1000);
     ractive.on("accept", function(event){
         var reviewId = event.context.id;
-        myReviews.child(reviewId).child("users").child(db.getAuth().uid).child("status").set("accepted");
-        ractive.data.reviews.splice( ractive.data.reviews.indexOf(event.context));
+        var group = event.context.group;
+        reviews.child(group).child(reviewId).child("users").child(db.getAuth().uid).child("status").set("accepted");
+        ractive.data.reviews.splice( ractive.data.reviews.indexOf(event.context),1);
         ractive.update();
     });
     
-    ractive.on("decline", function(){
+    ractive.on("decline", function(event){
         var reviewId = event.context.id;
-        myReviews.child(reviewId).child("users").child(db.getAuth().uid).child("status").set("declined");
-        ractive.data.reviews.splice( ractive.data.reviews.indexOf(event.context));
+        var group = event.context.group;
+        reviews.child(group).child(reviewId).child("users").child(db.getAuth().uid).child("status").set("declined");
+        ractive.data.reviews.splice( ractive.data.reviews.indexOf(event.context),1);
         ractive.update();
     });
 }
@@ -294,7 +318,7 @@ var routes = {
         '/request': auth(requestReviewRoute),
         '/Thanks/:group/:id' : thanksRoute,
         '/ReviewStatus/:group/:id': auth(reviewStatusRoute),
-        '/MyReviews/:group': auth(myReviewsRoute)
+        '/MyReviews': auth(myReviewsRoute)
       };
 
 
