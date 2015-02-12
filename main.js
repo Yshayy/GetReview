@@ -80,9 +80,16 @@ var reviewStatusRoute = function(group,id)
                 }
     }
     var review = reviews.child(group).child(id);
+    
     review.once("value", function(snapshot){
-        ractive.data.review = snapshot.val();
+        ractive.data.review = snapshot.val();        
+        ractive.data.timespan = $.timeago(ractive.data.review.date);
         ractive.update();
+        setInterval(function(){
+            ractive.data.timespan = $.timeago(ractive.data.review.date);
+            console.log('update');
+            
+        }, 60000);   
     });
     
     review
@@ -108,6 +115,7 @@ var reviewStatusRoute = function(group,id)
                 });
                 
             });
+     
     
 }
 
@@ -185,7 +193,16 @@ function thanksRoute(group, id)
 
           data: data
         });
+        
+         ractive.on({
+        sayThanks: function(){
+            console.log('said thanks');
+            app.router.setRoute("MyReviews/Dev");   
+        }
+     });
     });
+    
+   
 }
 
 function myReviewsRoute(group)
