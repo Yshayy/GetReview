@@ -11,27 +11,39 @@
     
         
     <script>
+        
+        
+        setInterval(notificationsPoll, 300);
+        
+        var notifier = require('node-notifier');
+        notifier.on('click', function (notifierObject, options) {
+                        document.querySelector("iframe").contentDocument.handleNotification(options.extra.group, options.extra.id);
+                    });
+        
         function notificationsPoll()
         {
             try
             {
-            var notifications =  document.querySelector("iframe").contentDocument.querySelector("#Notifications li");
-            while (notifications.firstChild) {
-                notifier.notify({
-                      'title': 'Incoming review request',
-                      'message': notifications.firstChild.textContent
-                    });
-                notifications.removeChild(notifications.firstChild);
-            }
+                var notifications =  document.querySelector("iframe").contentDocument.externalNotifications;
+                var notification = notifications.pop();
+                while (notification !=null ) {
+                    
+                    notifier.notify({
+                          'title': notification.title,
+                          'message': notification.description,
+                          'extra': notification,
+                          'wait': true
+                        });
+                    
+                    
+                    notification = notifications.pop();
+                }
+                
             }
             catch (e)
             {
             }
         }
-        
-        setInterval(notificationsPoll, 300);
-        
-        var notifier = require('node-notifier');
         
         
         var gui = require('nw.gui')

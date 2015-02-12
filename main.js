@@ -301,3 +301,38 @@ var routes = {
 app.router = Router(routes);
 app.router.init();
 
+document.handleNotification = function(group, id){
+    reviews.child(group).child(id).child("users").child(db.getAuth().uid).child("status").set("accepted");
+    
+}
+function forwardNotification(group)
+{
+    reviews.child(group).on("child_added", function(snapshot)
+    {
+        var review = snapshot.val();
+        if (review.reviewer) return;
+        if (review.status !== "pending") return;
+        if (review.reviewee === db.getAuth().uid) return;
+        if ((new Date() - new Date(review.date)) > 60000) return;
+        if (review.description)
+        {
+            document.externalNotifications = document.externalNotifications || []
+            document.externalNotifications.push({
+                title: review.reviewee.firstName,
+                description: review.description,
+                group:  group,
+                id: snapshot.name()
+            });
+            /*
+            var title = $("<div/>").text(review.reviewee.firstName + " need a review!");
+            var description = $("<div/>").text(review.description);
+            
+            $("#Notifications").append($("<li/>").append(title).append(description));*/
+        }
+    });
+}
+
+forwardNotification("UX");
+forwardNotification("Dev");
+forwardNotification("Product");
+
