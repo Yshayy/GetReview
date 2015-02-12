@@ -40,7 +40,7 @@ var loginRoute = function()
 
     ractive.on({
     googleConnect:  function() {
-        db.authWithOAuthPopup("google", function(error, authData) {
+        db.authWithOAuthRedirect("google", function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
         } else {
