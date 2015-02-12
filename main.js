@@ -68,24 +68,39 @@ var reviewStatusRoute = function(group,id)
       }
     });
     
-    reviews.child(group)
-            .child(id)
+    function checkAccepted(reviewerData)
+    {
+        if (reviewerData.status === "accepted")
+                {
+                    review.set({reviewer: reviewerData}, function(){
+                        app.router.setRoute("thanks/" + group + "/" + id );
+                    });
+                }
+    }
+    var review = reviews.child(group)
+            .child(id);
+    
+    review
            .child("users")
            .on("child_added", function(snapshot)
             {
-                console.log("new child added");
-                ractive.data.users.push(snapshot.val());
+                var reviewerData = snapshot.val();
+                checkAccepted(reviewerData);
+                ractive.data.users.push(reviewerData);
             });
     
-    reviews.child(group)
-            .child(id)
+    review
            .child("users")
            .on("child_changed", function(snapshot)
             {
                 var updatedUser = snapshot.val();
+                checkAccepted(updatedUser);
                 var targetUser = ractive.data.users.filter(function(u){ return u.id === updatedUser.id;})[0];
                 $.extend(targetUser, updatedUser);
                 ractive.update("users");
+        
+                
+                
             });
     
 }
@@ -141,7 +156,27 @@ var requestReviewRoute = function()
     });
 }
 
-function respond(id)
+function thanksRoute(group, id)
+{
+    console.log("thanks");
+    var review = reviews.child(group)
+            .child(id);
+    
+    review.once("value", function(snapshot)
+    {
+        var data = snapshot.val();
+        ractive = new Ractive({
+
+          el: 'App',
+
+          template: '#ThanksTemplate',
+
+          data: data
+        });
+    });
+}
+
+function myReviewsRoute(group)
 {
     
 }
@@ -185,8 +220,9 @@ var routes = {
         '/': auth(homeRoute),
         '/login': loginRoute,
         '/request': auth(requestReviewRoute),
+        '/Thanks/:group/:id' : thanksRoute,
         '/ReviewStatus/:group/:id': auth(reviewStatusRoute),
-        '/Respond/:id':auth(respond)
+        '/MyReviews': myReviewsRoute
       };
 
 
