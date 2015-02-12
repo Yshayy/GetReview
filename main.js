@@ -356,7 +356,7 @@ function forwardNotification(group)
         var review = snapshot.val();
         if (review.reviewer) return;
         if (review.status !== "pending") return;
-        if (review.reviewee === db.getAuth().uid) return;
+        if (review.reviewee.id === db.getAuth().uid) return;
         if ((new Date() - new Date(review.date)) > 60000) return;
         if (review.description)
         {
