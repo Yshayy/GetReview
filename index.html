@@ -28,8 +28,7 @@
 
    <script id="RequestReviewTemplate" type='text/ractive'>
         <div id='form'>            
-            <div id='header'> What kind of review do you need?</div>
-            
+            <div id='header'> What kind of review do you need?</div>        
             <div id='groups'>
             {{#groups}}            
             <div class='radio-group'>
@@ -44,7 +43,21 @@
   </script>
 
   <script id="ReviewStatusTemplate" type='text/ractive'>
-  Hello!
+  <div>
+    <div class="review-title">
+    <div class="mega-title"> SENT!</div>
+    to {{users.length}} potential <br/>
+    saint helpers
+    </div>
+    
+  
+    {{#users}}
+        <ul id="reviewers">
+        <li data-status="{{status}}">
+        <img style="width:64px;height:64px" src="{{picture}}" alt="{{firstName}}" />
+        </li>
+    {{/users}}
+  </div>
   </script>
 
   <script src="main.js"></script>
