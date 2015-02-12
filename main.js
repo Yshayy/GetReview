@@ -203,11 +203,15 @@ function myReviewsRoute(group)
     ractive.on("accept", function(event){
         var reviewId = event.context.id;
         myReviews.child(reviewId).child("users").child(db.getAuth().uid).set({status: "accepted"});
+        ractive.data.reviews.splice( ractive.data.reviews.indexOf(event.context));
+        ractive.update();
     });
     
     ractive.on("decline", function(){
         var reviewId = event.context.id;
         myReviews.child(reviewId).child("users").child(db.getAuth().uid).set({status: "declined"});
+        ractive.data.reviews.splice( ractive.data.reviews.indexOf(event.context));
+        ractive.update();
     });
 }
 
