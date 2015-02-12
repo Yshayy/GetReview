@@ -197,7 +197,7 @@ function myReviewsRoute(group)
         if (review.reviewer) return;
         if (review.status !== "pending") return;
         if (review.reviewee === db.getAuth().uid) return;
-        
+        if (!review.users[db.getAuth().uid]) return;
         ractive.data.reviews.push(review);
     });
     

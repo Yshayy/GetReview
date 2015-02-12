@@ -23,22 +23,23 @@
 
   <script id="HomeTemplate" type='text/ractive'>
     <a id="requestReview" href="#/request">
-    <button>Request Review</button>
+    <div id="btnRequestReview" class='btn'>Get review</div>
     </a>
   </script>
 
    <script id="RequestReviewTemplate" type='text/ractive'>
-        <div>            
+        <div id='form'>            
+            <div id='header'> What kind of review do you need?</div>        
             <div id='groups'>
             {{#groups}}            
-            <div id='radio-group'>
+            <div class='radio-group'>
                 <input id='group-{{.}}' type="radio" name="{{group}}" value="{{.}}" />         
                 <label for='group-{{.}}'>{{.}}</label>
             </div>
             {{/groups}}
             </div>
             <textarea placeholder='Add a short description here...' id='desc' value='{{description}}'/>
-            <button on-click='submitReview'>Submit</button>
+            <div class='btn'  on-click='submitReview' id='submitRequest'>Submit</div>
         </div>
   </script>
 

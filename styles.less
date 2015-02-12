@@ -1,0 +1,126 @@
+/* CSS file placeholder. */
+body{
+    background:#212121;
+    color:white;
+    font-size:24px;    
+    font-family: 'calibri';
+}
+
+#App{
+    text-align: center;   
+    .btn{
+        background-color:#D3145A;
+        display: inline-block;
+        color:white;
+        border-width: 5px;
+        border-color:white;
+        border-radius: 15px;        
+        border-style: solid;
+        padding:20px;
+         
+        cursor: pointer;
+    }
+    
+    
+    
+    #btnRequestReview{
+        margin-top:100px;
+    }
+    
+    #form{        
+        margin: 100px auto;
+        width: 389px;
+        
+         #submitRequest{
+            width:250px;
+        }
+        #header{
+            font-size: 40px;
+            font-weight: bold;
+            width: 389px;
+            text-align: left;
+            margin: auto;
+        }
+        #groups{
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;            
+           
+            .radio-group{
+                margin-right: 10px;
+                display: inline-block;
+                
+               
+                label {
+                    text-align: left;
+                    color:white;
+                    display: inline-block;
+                    cursor: pointer;
+                    position: relative;
+                    padding: 10px;
+                    padding-left: 45px;
+                    width:70px;                
+                    
+                    &:before {
+                        content: "";
+                        display: inline-block;
+                        width: 26px;
+                        height: 26px;
+                        border-radius: 13px;                        
+                        position: absolute;
+                        left: 10px;
+                        bottom: 11px;
+                        background-color: white;                
+                    }
+                    
+                  
+                }
+            
+                 input[type=radio]:checked + label:before {                           
+                     border-color:white;
+                     border-style: solid;                     
+                     width: 20px;
+                     height: 20px;
+                     background-color: #212121;                                                
+                     
+                }
+                 
+                
+                input[type=radio]{
+                    display: none;
+                }
+            }
+            
+        }
+         textarea{
+            background: center center no-repeat; /* This ruins default border */
+            margin-top:30px;
+            font-family: calibri;
+            width: 100%;
+            max-width: 450px;
+            border-width: 0px;
+            margin-top:20px;
+            font-size: 20px;
+            color: white;
+            padding: 10px;            
+            display: block;
+            margin: auto;
+            margin-bottom: 20px;
+            resize: none;
+            &:focus{
+               border-width:0;
+               
+           }
+        }
+           
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            font-style: italic;
+            color:white;
+            opacity: 0.7;
+        }  
+        
+       
+    }
+    
+     
+}
