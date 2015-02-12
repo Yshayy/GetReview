@@ -68,6 +68,21 @@
         Maybe you should bring some candy to be a good host
         
   </script>
+    
+  <script id="MyReviewsTemplate" type='text/ractive'>
+        <ul>
+        {{#reviews}}
+            <li>
+                <div>from {{reviewee}}:</div>
+                <div>{{description}}</div>
+                <div>
+                <button on-click="accept">accept</button>
+                <button on-click="decline">decline</button>
+                </div>
+            </li>
+        {{/reviews}}
+        </ul>
+  </script>
 
   <script src="main.js"></script>
 </body>

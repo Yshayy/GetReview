@@ -138,7 +138,7 @@ var requestReviewRoute = function()
                 {
                     if (userId == db.getAuth().uid) continue;
                     var user = allUsers[userId];
-                    review.child("users").push(
+                    review.child("users").child(userId).set(
                         {
                             firstName: user.firstName,
                             lastName: user.lastName,
@@ -178,7 +178,38 @@ function thanksRoute(group, id)
 
 function myReviewsRoute(group)
 {
+    ractive = new Ractive({
+
+      el: 'App',
+
+      template: '#MyReviewsTemplate',
+
+      data: {
+        reviews: []
+      }
+    });
     
+    var myReviews = reviews.child(group);
+    myReviews.limitToLast(10).on("child_added", function(snapshot)
+    {
+        var review = snapshot.val();
+        review.id = snapshot.name();
+        if (review.reviewer) return;
+        if (review.status !== "pending") return;
+        if (review.reviewee === db.getAuth().uid) return;
+        
+        ractive.data.reviews.push(review);
+    });
+    
+    ractive.on("accept", function(event){
+        var reviewId = event.context.id;
+        myReviews.child(reviewId).child("users").child(db.getAuth().uid).set({status: "accepted"});
+    });
+    
+    ractive.on("decline", function(){
+        var reviewId = event.context.id;
+        myReviews.child(reviewId).child("users").child(db.getAuth().uid).set({status: "declined"});
+    });
 }
 
 
@@ -222,7 +253,7 @@ var routes = {
         '/request': auth(requestReviewRoute),
         '/Thanks/:group/:id' : thanksRoute,
         '/ReviewStatus/:group/:id': auth(reviewStatusRoute),
-        '/MyReviews': myReviewsRoute
+        '/MyReviews/:group': myReviewsRoute
       };
 
 
