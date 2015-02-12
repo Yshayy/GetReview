@@ -32,7 +32,8 @@ body{
         width: 389px;
         
          #submitRequest{
-            width:250px;
+            width:180px;
+            border-radius:30px;
         }
         #header{
             font-size: 40px;
@@ -40,6 +41,13 @@ body{
             width: 389px;
             text-align: left;
             margin: auto;
+            position:relative;
+            img{
+                position: absolute;
+left: -80px;
+top: 0;
+            }
+            
         }
         #groups{
             margin-top: 20px;
@@ -92,27 +100,37 @@ body{
             }
             
         }
-         textarea{
-            background: center center no-repeat; /* This ruins default border */
-            margin-top:30px;
-            font-family: calibri;
-            width: 100%;
-            max-width: 450px;
-            border-width: 0px;
-            margin-top:20px;
-            font-size: 20px;
-            color: white;
-            padding: 10px;            
-            display: block;
-            margin: auto;
-            margin-bottom: 20px;
-            resize: none;
-            &:focus{
-               border-width:0;
-               
-           }
+        #descriptionContainer{
+            position:relative;
+            margin-top: 20px;
+            img{
+            
+                position: absolute;
+                top: 0;
+                left: -58px;
+            }
+             textarea{
+                background: center center no-repeat; /* This ruins default border */
+                margin-top:30px;
+                font-family: calibri;
+                width: 100%;
+                max-width: 450px;
+                border-width: 0px;
+                margin-top:20px;
+                font-size: 20px;
+                color: white;
+                padding: 10px;            
+                display: block;
+                margin: auto;
+                margin-bottom: 20px;
+                resize: none;
+                &:focus{
+                   border-width:0;               
+               }
+                position:relative;
+
+            }
         }
-           
         ::-webkit-input-placeholder { /* WebKit browsers */
             font-style: italic;
             color:white;
