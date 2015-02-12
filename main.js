@@ -128,7 +128,7 @@ var requestReviewRoute = function()
                             firstName: user.firstName,
                             lastName: user.lastName,
                             id: userId,
-                            picutre: user.picture,
+                            picture: user.picture,
                             status: "pending"
                         });
                 }
@@ -145,6 +145,8 @@ function respond(id)
 {
     
 }
+
+
 
 var auth = function(fn)
 {

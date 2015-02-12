@@ -27,7 +27,7 @@
   </script>
 
    <script id="RequestReviewTemplate" type='text/ractive'>
-        <div id='form'>            
+        <div>            
             <div id='groups'>
             {{#groups}}            
             <div id='radio-group'>
@@ -43,8 +43,18 @@
 
   <script id="ReviewStatusTemplate" type='text/ractive'>
   <div>
+    <div class="review-title">
+    <div class="mega-title"> SENT!</div>
+    to {{users.length}} potential <br/>
+    saint helpers
+    </div>
+    
+  
     {{#users}}
-        {{firstName}} - {{status}}
+        <ul id="reviewers">
+        <li data-status="{{status}}">
+        <img style="width:64px;height:64px" src="{{picture}}" alt="{{firstName}}" />
+        </li>
     {{/users}}
   </div>
   </script>

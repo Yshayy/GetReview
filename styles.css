@@ -4,3 +4,37 @@ body{
     color:white;
     font-size:24px;
 }
+
+#reviewers
+{
+    list-style: none;
+    li
+    {
+        display: inline-block;
+    }
+}
+
+#reviewers li[data-status=pending] img
+{
+    border-radius: 34px;
+    border: 2px solid blue;
+}
+
+.review-title
+{
+    display: inline-block;
+    font-size: 40px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-family: calibri;
+    text-align: center;
+    padding: 40px 60px;
+    border: 2px dashed white;
+    
+}
+
+.review-title .mega-title
+{
+    font-size: 68px;
+    margin-bottom: 20px;
+}
