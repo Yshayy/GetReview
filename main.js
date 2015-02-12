@@ -73,7 +73,7 @@ var reviewStatusRoute = function(group,id)
         if (reviewerData.status === "accepted")
                 {
                     review.set({reviewer: reviewerData}, function(){
-                        app.router.setRoute("thanks/" + group + "/" + id );
+                        app.router.setRoute("Thanks/" + group + "/" + id );
                     });
                 }
     }
@@ -190,14 +190,13 @@ function myReviewsRoute(group)
     });
     
     var myReviews = reviews.child(group);
-    myReviews.limitToLast(10).on("child_added", function(snapshot)
+    myReviews.on("child_added", function(snapshot)
     {
         var review = snapshot.val();
         review.id = snapshot.name();
         if (review.reviewer) return;
         if (review.status !== "pending") return;
         if (review.reviewee === db.getAuth().uid) return;
-        if (!review.users[db.getAuth().uid]) return;
         ractive.data.reviews.push(review);
     });
     
