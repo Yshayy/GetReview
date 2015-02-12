@@ -1,3 +1,7 @@
+if (document.location.hash == "")
+{
+    document.location.hash = "/";
+}
 
 var db = new Firebase("https://getreview.firebaseio.com");
 var users = db.child("users");
@@ -36,7 +40,7 @@ var loginRoute = function()
 
     ractive.on({
     googleConnect:  function() {
-        db.authWithOAuthPopup("google", function(error, authData) {
+        db.authWithOAuthRedirect("google", function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
         } else {
