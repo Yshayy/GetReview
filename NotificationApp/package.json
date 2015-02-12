@@ -1,4 +1,13 @@
 {
   "name": "get-review",
-  "main": "index.html"
+  "main": "index.html",
+  "window": {
+    "width": 800,
+    "height": 600,
+    "toolbar": true,
+    "frame": false
+  },
+  "dependencies": {
+    "node-notifier": "^4.1.0"
+  }
 }
