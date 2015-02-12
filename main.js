@@ -13,21 +13,6 @@ var app = {
   router: undefined
 }
 
-
-var homeRoute = function()
-{
-   ractive = new Ractive({
-
-      el: 'App',
-
-      template: '#HomeTemplate',
-
-
-      data: {}
-    });
-}
-
-
 var loginRoute = function()
 {
     if (db.getAuth())
@@ -333,7 +318,7 @@ var routes = {
             
             users.set()
         }),
-        '/': auth(homeRoute),
+        '/': auth(myReviewsRoute),
         '/login': loginRoute,
         '/request': auth(requestReviewRoute),
         '/Thanks/:group/:id' : thanksRoute,
