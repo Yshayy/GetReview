@@ -4,6 +4,7 @@ if (document.location.hash == "")
 }
 
 var db = new Firebase("https://getreview.firebaseio.com");
+
 var users = db.child("users");
 var reviews = db.child("reviews");
 var ractive;
@@ -359,4 +360,9 @@ function forwardNotification(group)
 forwardNotification("UX");
 forwardNotification("Dev");
 forwardNotification("Product");
+
+db.onAuth(function()
+          {
+    app.router.setRoute("/");
+});
 
