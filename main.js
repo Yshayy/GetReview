@@ -252,7 +252,7 @@ var routes = {
         '/request': auth(requestReviewRoute),
         '/Thanks/:group/:id' : thanksRoute,
         '/ReviewStatus/:group/:id': auth(reviewStatusRoute),
-        '/MyReviews/:group': myReviewsRoute
+        '/MyReviews/:group': auth(myReviewsRoute)
       };
 
 
