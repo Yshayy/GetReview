@@ -10,9 +10,6 @@
 </head>
 
 <body>
-  <h1 id="greeting"></h1>
-
-
 
 
   <div id="App">
@@ -30,11 +27,22 @@
   </script>
 
    <script id="RequestReviewTemplate" type='text/ractive'>
-
+        <div id='form'>            
+            <div id='groups'>
+            {{#groups}}            
+            <div id='radio-group'>
+                <input id='group-{{.}}' type="radio" name="{{group}}" value="{{.}}" />         
+                <label for='group-{{.}}'>{{.}}</label>
+            </div>
+            {{/groups}}
+            </div>
+            <textarea placeholder='Add a short description here...' id='desc' value='{{description}}'/>
+            <button on-click='submitReview'>Submit</button>
+        </div>
   </script>
 
-  <script id="ReviewStatus" type='text/ractive'>
-
+  <script id="ReviewStatusTemplate" type='text/ractive'>
+  Hello!
   </script>
 
   <script src="main.js"></script>

@@ -52,6 +52,19 @@ var loginRoute = function()
     }});
 }
 
+var reviewStatusRoute = function(id)
+{
+    console.log(id);
+    ractive = new Ractive({
+
+      el: 'App',
+
+      template: '#ReviewStatusTemplate',
+
+      data: {}
+    });
+}
+
 var requestReviewRoute = function()
 {
    ractive = new Ractive({
@@ -60,7 +73,29 @@ var requestReviewRoute = function()
 
       template: '#RequestReviewTemplate',
 
-      data: {}
+      data: {
+        groups: [
+            'Dev',
+            'Product',
+            'UX'],
+        description: '',
+        group: 'UX'
+      }
+    });
+    
+    ractive.on({
+        submitReview : function(){
+            //console.log('submitReview ' + ractive.data.group);
+            var review = reviews.child(ractive.data.group).push({
+                status: 'pending',
+                date: new Date(),
+                description: ractive.data.description,
+                reviewee: db.getAuth().uid,                
+            });
+            
+            app.router.setRoute('ReviewStatus/'+review.name());
+            
+        } 
     });
 }
 
@@ -79,8 +114,10 @@ var routes = {
         },
         '/home': homeRoute,
         '/login': loginRoute,
-        '/request': requestReviewRoute
+        '/request': requestReviewRoute,
+        '/ReviewStatus/:id': reviewStatusRoute
       };
+
 
 app.router = Router(routes);
 app.router.init();
