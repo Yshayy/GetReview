@@ -204,7 +204,8 @@ function myReviewsRoute()
       template: '#MyReviewsTemplate',
 
       data: {
-        reviews: []
+        reviews: [],
+        loading:true
       }
     });
     
@@ -215,6 +216,10 @@ function myReviewsRoute()
         var reviewGroup = groups[i];
         myReviews.on("child_added", function(snapshot, obj)
         {            
+            if (ractive.data.loading){
+                ractive.data.loading = false;
+                $('.spinner').hide();
+            }
             var review = snapshot.val();
             review.id = snapshot.name();
             review.group = snapshot.ref().parent().name();
@@ -225,6 +230,9 @@ function myReviewsRoute()
                 (review.users && review.users[db.getAuth().uid].status !== 'pending')) return;
             if (review.reviewee === db.getAuth().uid) return;
             ractive.data.reviews.push(review);
+            ractive.data.reviews.sort(function(a, b){
+                return new Date(b.date) - new Date(a.date);
+            });
             ractive.update();
         });    
         
