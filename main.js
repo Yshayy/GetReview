@@ -28,6 +28,11 @@ var homeRoute = function()
 
 var loginRoute = function()
 {
+    if (db.getAuth())
+    {
+        app.router.setRoute("/");
+        return;
+    }
    ractive = new Ractive({
 
       el: 'App',
