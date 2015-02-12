@@ -228,7 +228,7 @@ function myReviewsRoute()
         var myReviews = reviews.child(groups[i]);
         var reviewGroup = groups[i];
         myReviews.on("child_added", function(snapshot, obj)
-        {
+        {            
             var review = snapshot.val();
             review.id = snapshot.name();
             review.group = snapshot.ref().parent().name();
@@ -236,9 +236,10 @@ function myReviewsRoute()
             if (review.reviewer) return;            
             if (review.status !== "pending" || 
                 review.reviewee.id == db.getAuth().uid ||
-               review.users[db.getAuth().uid].status !== 'pending') return;
+                (review.users && review.users[db.getAuth().uid].status !== 'pending')) return;
             if (review.reviewee === db.getAuth().uid) return;
             ractive.data.reviews.push(review);
+            ractive.update();
         });    
         
          myReviews.on("child_removed", function(snapshot)
@@ -249,21 +250,39 @@ function myReviewsRoute()
             {
                 if (ractive.datata.reviews[j].id == review.id){
                     ractive.datata.reviews.splice(j,1);
+                    ractive.update();
+                    break;
+                }
+            }
+        });  
+        
+         myReviews.on("child_changed", function(snapshot, obj)
+        {            
+            var review = snapshot.val();
+            review.id = snapshot.name();
+            review.group = snapshot.ref().parent().name();
+            if (review.status !== 'pending'){
+                for(var i = 0;i<ractive.data.reviews.length;i++) {
+                        if (ractive.data.reviews[i].id == review.id){
+                            ractive.data.reviews.splice(i,1);
+                            ractive.update();
+                            break;
+                        }
                 }
             }
         });    
     }
     
     setInterval(function(){
-        for(var i = 0;i<ractive.data.reviews.length;i++) {
-            console.log('update');
+        for(var i = 0;i<ractive.data.reviews.length;i++) {            
             ractive.data.reviews[i].timespan = $.timeago(ractive.data.reviews[i].date);
         }
-    },1000);
+    },60000);
     ractive.on("accept", function(event){
         var reviewId = event.context.id;
         var group = event.context.group;
         reviews.child(group).child(reviewId).child("users").child(db.getAuth().uid).child("status").set("accepted");
+        reviews.child(group).child(reviewId).child("status").set("accepted");
         ractive.data.reviews.splice( ractive.data.reviews.indexOf(event.context),1);
         ractive.update();
     });
