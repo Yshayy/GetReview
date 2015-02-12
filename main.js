@@ -65,6 +65,7 @@ var reviewStatusRoute = function(group,id)
 
       data: {
         users:[],
+        review : undefined
       }
     });
     
@@ -77,8 +78,11 @@ var reviewStatusRoute = function(group,id)
                     });
                 }
     }
-    var review = reviews.child(group)
-            .child(id);
+    var review = reviews.child(group).child(id);
+    review.once("value", function(snapshot){
+        ractive.data.review = snapshot.val();
+        ractive.update();
+    });
     
     review
            .child("users")
@@ -128,7 +132,7 @@ var requestReviewRoute = function()
             //console.log('submitReview ' + ractive.data.group);
             var review = reviews.child(ractive.data.group).push({
                 status: 'pending',
-                date: new Date(),
+                date: new Date().toISOString(),
                 description: ractive.data.description,
                 reviewee: db.getAuth().uid, 
             });

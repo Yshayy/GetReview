@@ -20,6 +20,52 @@ body {
   padding: 20px;
   cursor: pointer;
 }
+#App #reviewStatusContainer {
+  width: 330px;
+  margin: auto;
+  text-align: left;
+}
+#App #reviewStatusContainer .review-title {
+  position: relative;
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: calibri;
+  text-align: left;
+  padding-top: 100px;
+}
+#App #reviewStatusContainer .review-title .mega-title {
+  font-size: 68px;
+  color: #22B473;
+}
+#App #reviewStatusContainer .review-title #review-title-img {
+  position: absolute;
+  top: 108px;
+  left: -130px;
+}
+#App #reviewStatusContainer #reviewers {
+  padding: 0;
+}
+#App #reviewStatusContainer #reviewers li {
+  display: inline-block;
+  height: 48px;
+  width: 48px;
+  margin: 1px;
+}
+#App #reviewStatusContainer #reviewers li img {
+  height: 100%;
+  width: 100%;
+}
+#App #reviewStatusContainer #timerContainer {
+  position: relative;
+  font-size: 30px;
+  font-weight: bold;
+}
+#App #reviewStatusContainer #timerContainer img {
+  position: absolute;
+  top: 0;
+  left: -91px;
+}
 #App #btnRequestReview {
   margin-top: 100px;
 }

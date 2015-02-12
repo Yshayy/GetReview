@@ -29,21 +29,3 @@
     border: 2px solid green;
 }
 
-.review-title
-{
-    display: inline-block;
-    font-size: 40px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-family: calibri;
-    text-align: center;
-    padding: 40px 60px;
-    border: 2px dashed white;
-    
-}
-
-.review-title .mega-title
-{
-    font-size: 68px;
-    margin-bottom: 20px;
-}
