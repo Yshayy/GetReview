@@ -138,7 +138,7 @@ var requestReviewRoute = function()
       data: {
         groups: groups,
         description: '',
-        group: 'UX'
+        group: 'Dev'
       }
     });
     
