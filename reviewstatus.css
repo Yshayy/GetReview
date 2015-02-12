@@ -19,9 +19,9 @@
     border: 2px solid blue;
 }
 
-#reviewers li[data-status=pending] img
+#reviewers li[data-status=rejected] img
 {
-    border: 2px solid green;
+    border: 2px solid red;
 }
 
 #reviewers li[data-status=pending] img
