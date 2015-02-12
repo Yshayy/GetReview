@@ -42,7 +42,11 @@
   </script>
 
   <script id="ReviewStatusTemplate" type='text/ractive'>
-  Hello!
+  <div>
+    {{#users}}
+        {{firstName}} - {{status}}
+    {{/users}}
+  </div>
   </script>
 
   <script src="main.js"></script>
