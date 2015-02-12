@@ -52,20 +52,26 @@
   </script>
 
   <script id="ReviewStatusTemplate" type='text/ractive'>
-  <div>
+  <div id='reviewStatusContainer'>
     <div class="review-title">
-    <div class="mega-title"> SENT!</div>
-    to {{users.length}} potential <br/>
-    saint helpers
+    Request was <br>
+    <div class="mega-title"> SENT</div>
+    to these {{users.length}} holy reviewers
+    <img id='review-title-img' src='./assets/sent.png'/>
     </div>
     
-  
-    {{#users}}
-        <ul id="reviewers">
-        <li data-status="{{status}}">
-        <img style="width:64px;height:64px" src="{{picture}}" alt="{{firstName}}" />
-        </li>
-    {{/users}}
+    <ul id="reviewers">
+        {{#users}}
+            <li data-status="{{status}}">
+                <img src="{{picture}}" alt="{{firstName}}" />
+            </li>
+        {{/users}}
+    </ul>
+    <div id='timerContainer'>
+        <span>Your request was submitted {{review.date}} ago 
+        <img id='review-timer-img' src='./assets/timer.png'/>
+    </div>
+    
   </div>
   </script>
     

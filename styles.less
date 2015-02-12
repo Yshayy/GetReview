@@ -20,8 +20,63 @@ body{
          
         cursor: pointer;
     }
-    
-    
+   
+    #reviewStatusContainer{
+        width: 330px;
+        margin: auto;
+        text-align: left;
+        .review-title
+        {
+           position:relative;
+            display: inline-block;
+            font-size: 30px;
+            font-weight: bold;
+            font-family: calibri;
+            text-align: left;
+            
+            padding-top:100px;
+
+            .mega-title
+            {
+                font-size: 68px;
+                color:#22B473;
+            }
+
+            #review-title-img
+            {
+
+                position: absolute;
+                top: 108px;
+                left: -130px;
+            }
+
+        }   
+
+        #reviewers{
+            padding: 0;
+            li{
+                display:inline-block;
+                height:48px;
+                width:48px;
+                margin: 1px;
+                img{
+                    height:100%;
+                    width:100%;
+                }   
+            }
+        }
+        
+        #timerContainer{
+            position:relative;
+            font-size: 30px;
+font-weight: bold;
+            img{
+                position:absolute;
+                top:0;
+                left:-91px;
+            }
+        }
+    }
     
     #btnRequestReview{
         margin-top:100px;
@@ -130,6 +185,8 @@ top: 0;
                 position:relative;
 
             }
+        
+        
         }
         ::-webkit-input-placeholder { /* WebKit browsers */
             font-style: italic;
